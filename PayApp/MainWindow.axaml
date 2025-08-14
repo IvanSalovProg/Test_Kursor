@@ -1,0 +1,34 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		x:Class="PayApp.MainWindow"
+		Width="900" Height="600"
+		Title="Pay Processor">
+	<Grid RowDefinitions="Auto,*" Margin="12">
+		<StackPanel Orientation="Horizontal" Spacing="8">
+			<Button Content="Run Pipeline" Click="OnRunPipelineClick"/>
+			<TextBlock Text="Source XML:" VerticalAlignment="Center"/>
+			<TextBox Width="320" Text="{Binding SourcePath, Mode=TwoWay}"/>
+			<Button Content="..." Click="OnBrowseSourceClick"/>
+		</StackPanel>
+		<Grid RowDefinitions="* , Auto" Grid.Row="1" Margin="0,12,0,0">
+			<DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Employees}" Margin="0,0,0,12">
+				<DataGrid.Columns>
+					<DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
+					<DataGridTextColumn Header="Surname" Binding="{Binding Surname}" Width="*"/>
+					<DataGridTextColumn Header="Total Salary" Binding="{Binding TotalSalary}" Width="*"/>
+				</DataGrid.Columns>
+			</DataGrid>
+			<ItemsControl Grid.Row="1" ItemsSource="{Binding MonthlyTotals}">
+				<ItemsControl.ItemTemplate>
+					<DataTemplate>
+						<StackPanel Orientation="Horizontal" Spacing="6">
+							<TextBlock Text="{Binding Month}"/>
+							<TextBlock Text=":"/>
+							<TextBlock Text="{Binding Total}"/>
+						</StackPanel>
+					</DataTemplate>
+				</ItemsControl.ItemTemplate>
+			</ItemsControl>
+		</Grid>
+	</Grid>
+</Window>
