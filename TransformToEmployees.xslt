@@ -12,7 +12,20 @@
 				<Employee name="{@name}" surname="{@surname}">
 					<!-- Emit all salaries for this person -->
 					<xsl:for-each select="key('itemsByPerson', concat(@name,'|',@surname))">
-						<salary amount="{@amount}" mount="{@mount}"/>
+						<salary amount="{@amount}">
+							<xsl:attribute name="mount">
+								<xsl:choose>
+									<!-- Prefer month from ancestor section (for Data2.xml) if present -->
+									<xsl:when test="ancestor::*[self::january or self::february or self::march]">
+										<xsl:value-of select="name(ancestor::*[self::january or self::february or self::march][1])"/>
+									</xsl:when>
+									<!-- Fallback to item's own @mount attribute (for Data1.xml) -->
+									<xsl:otherwise>
+										<xsl:value-of select="@mount"/>
+									</xsl:otherwise>
+								</xsl:choose>
+							</xsl:attribute>
+						</salary>
 					</xsl:for-each>
 				</Employee>
 			</xsl:for-each>
