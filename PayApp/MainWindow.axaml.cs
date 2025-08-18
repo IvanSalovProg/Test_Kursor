@@ -97,7 +97,7 @@ public partial class MainWindow : Window, INotifyPropertyChanged
 				var amountStr = (string?)sal.Attribute("amount") ?? "0";
 				sum += ParseAmount(amountStr);
 			}
-			employee.SetAttributeValue("totalSalary", sum.ToString(CultureInfo.InvariantCulture));
+			employee.SetAttributeValue("totalSalary", sum.ToString("0.00", CultureInfo.InvariantCulture));
 		}
 		employeesDoc.Save(employeesOutPath);
 
@@ -116,7 +116,7 @@ public partial class MainWindow : Window, INotifyPropertyChanged
 					var amountStr = (string?)it.Attribute("amount") ?? "0";
 					totalAll += ParseAmount(amountStr);
 				}
-				payElement.SetAttributeValue("totalAmount", totalAll.ToString(CultureInfo.InvariantCulture));
+				payElement.SetAttributeValue("totalAmount", totalAll.ToString("0.00", CultureInfo.InvariantCulture));
 				sourceDoc.Save(SourcePath);
 			}
 		}
@@ -139,7 +139,7 @@ public partial class MainWindow : Window, INotifyPropertyChanged
 			.Select(g => new MonthlyTotalViewModel
 			{
 				Month = g.Key,
-				Total = g.Sum(s => ParseAmount((string?)s.Attribute("amount") ?? "0")).ToString(CultureInfo.InvariantCulture)
+				Total = g.Sum(s => ParseAmount((string?)s.Attribute("amount") ?? "0")).ToString("0.00", CultureInfo.InvariantCulture)
 			})
 			.OrderBy(m => m.Month)
 			.ToList();
@@ -147,7 +147,7 @@ public partial class MainWindow : Window, INotifyPropertyChanged
 		{
 			MonthlyTotals.Add(m);
 		}
-	}
+    }
 
 	private static double ParseAmount(string value)
 	{
